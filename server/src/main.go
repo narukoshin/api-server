@@ -79,6 +79,9 @@ func getUserById(w http.ResponseWriter, r *http.Request){
 	// executing fucking statement
 	stmt.QueryRow(userid).Scan(&user.Id, &user.Name, &user.Username)
 
+	// closing the database connection
+	stmt.Close()
+
 	// setting fucking header
 	w.Header().Set("Content-Type", "application/json")
 
@@ -115,6 +118,9 @@ func insertUsers(w http.ResponseWriter, r *http.Request){
 		// executing statement
 		var id int
 		stmt.QueryRow(user.Name, user.Username).Scan(&id)
+
+		// closed the database connection
+		stmt.Close()
 		
 		// validating user
 		if id != 0 {
